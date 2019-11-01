@@ -5,11 +5,11 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-16.04, macos-latest]
+        os: [macos-latest]
         include:
-          - os: ubuntu-16.04
-            artifact_name: mything
-            asset_name: linux-x64.zip
+#         - os: ubuntu-16.04
+#             artifact_name: mything
+#             asset_name: linux-x64.zip
 #         - os: windows-latest
 #             artifact_name: mything.exe
 #             asset_name: win32-x64.zip
@@ -27,7 +27,7 @@ jobs:
       with: 
         version: 5.13.1
     - name: Build Qode
-      run: QT_INSTALL_DIR=$Qt5_Dir node build.js
+      run: pwd && ls && QT_INSTALL_DIR=$Qt5_Dir node build.js
     
 #     - name: Upload binaries to release
 #       uses: svenstaro/upload-release-action@v1-release

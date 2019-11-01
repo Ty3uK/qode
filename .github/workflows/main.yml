@@ -5,14 +5,14 @@ jobs:
   test:
     strategy:
       matrix:
-        platform: [ubuntu-16.04, macos-latest]
+        os: [ubuntu-16.04, macos-latest]
         include:
-          - platform: ubuntu-16.04
+          - os: ubuntu-16.04
             artifact_name: mything
             asset_name: linux-x64.zip
-          - os: windows-latest
-            artifact_name: mything.exe
-            asset_name: win32-x64.zip
+#         - os: windows-latest
+#             artifact_name: mything.exe
+#             asset_name: win32-x64.zip
           - os: macos-latest
             artifact_name: mything
             asset_name: darwin-x64.zip

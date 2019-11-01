@@ -79,17 +79,14 @@ if (process.env.SYNC_GIT_SUBMODULE) {
   execSync("git submodule update --init --recursive", { stdio: null });
 }
 // Generate some dynamic gyp files.
-execSync(
-  `python configure --dest-cpu=${target_arch}`,
-  {
-    cwd: "node"
-  }
-);
+execSync(`python configure --dest-cpu=${target_arch}`, {
+  cwd: path.resolve(__dirname, "node")
+});
 // Update the build configuration.
 execSync(
   `python tools/gyp/gyp_main.py ../qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -Dqt_home_dir=${qt_install_dir} -I../config/node_overrides.gypi --depth .`,
   {
-    cwd: "node"
+    cwd: path.resolve(__dirname, "node")
   }
 );
 
@@ -99,7 +96,7 @@ const epath = `${path.join("..", "bin", "ninja")}${path.delimiter}${
 }`;
 
 execSync(`ninja -j8 -C out/Release qode`, {
-  cwd: "node",
+  cwd: path.resolve(__dirname, "node"),
   env: { PATH: epath }
 });
 

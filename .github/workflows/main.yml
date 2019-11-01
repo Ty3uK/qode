@@ -5,17 +5,17 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [ubuntu-16.04]
         include:
-          # - os: ubuntu-16.04
-          #     artifact_name: mything
-          #     asset_name: linux-x64.zip
+          - os: ubuntu-16.04
+              output_dir: node/out/Release/linux/
+              asset_name: linux-x64.zip
           # - os: windows-latest
-          #     artifact_name: mything.exe
+          #     output_dir: node/out/Release/win32/
           #     asset_name: win32-x64.zip
-          - os: macos-latest
-            artifact_name: mything
-            asset_name: darwin-x64.zip
+          # - os: macos-latest
+          #     output_dir: node/out/Release/darwin/
+          #     asset_name: darwin-x64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@master
@@ -33,10 +33,15 @@ jobs:
           SYNC_GIT_SUBMODULE: true
           QT_INSTALL_DIR: ${{job.container.env.Qt5Dir}}
         run: node build.js
-#     - name: Upload binaries to release
-#       uses: svenstaro/upload-release-action@v1-release
-#       with:
-#         repo_token: ${{ secrets.GITHUB_TOKEN }}
-#         file: target/release/${{ matrix.artifact_name }}
-#         asset_name: ${{ matrix.asset_name }}
-#         tag: ${{ github.ref }}
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          path: ${{matrix.output_dir}}
+          filename: "release.zip"
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: release.zip
+          asset_name: ${{ matrix.asset_name }}
+          tag: ${{ github.ref }}

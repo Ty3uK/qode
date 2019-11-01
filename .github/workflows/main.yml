@@ -16,7 +16,7 @@ jobs:
           - os: macos-latest
             artifact_name: mything
             asset_name: darwin-x64.zip
-    runs-on: ${{ matrix.platform }}
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master

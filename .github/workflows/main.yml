@@ -1,0 +1,17 @@
+on: push
+jobs:
+  test:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        version: 12
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v1
+      with: 
+        dir: /QtDir/
+        version: 5.13.1

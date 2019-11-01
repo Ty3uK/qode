@@ -13,5 +13,4 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v1
       with: 
-        dir: /QtDir/
         version: 5.13.1

@@ -38,13 +38,13 @@ jobs:
       #   run: node build.js
       - name: Archive Release
         working-directory: ${{matrix.asset_dir}}
-        run: npx bestzip $GITHUB_WORKSPACE/release.zip .
+        run: npx bestzip ${GITHUB_WORKSPACE}/release.zip .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
           name: test
-          path: $GITHUB_WORKSPACE/release.zip
+          path: ${GITHUB_WORKSPACE}/release.zip
         # - name: Upload binaries to release
       #   uses: svenstaro/upload-release-action@v1-release
       #   with:

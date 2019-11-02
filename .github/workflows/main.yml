@@ -8,7 +8,7 @@ jobs:
         os: [ubuntu-16.04]
         include:
           - os: ubuntu-16.04
-            asset_dir: "src/*" # node/out/Release/linux/
+            asset_dir: "src" # node/out/Release/linux/
             asset_name: "linux-x64.zip"
           # - os: windows-latest
           #   asset_dir: "src" #node/out/Release/win32/
@@ -37,11 +37,11 @@ jobs:
       #     QT_INSTALL_DIR: ${{job.container.env.Qt5Dir}}
       #   run: node build.js
       - name: Archive Release
-        uses: thedoctor0/zip-release@master
+        uses: montudor/action-zip@v0.1.0
+        working-directory: ${{matrix.asset_dir}}
         with:
-          path: ${{matrix.asset_dir}}
-          filename: "release.zip"
-          exclusions: "*.git* /*node_modules/*"
+          args: zip -qq -r ${{job.container.env.HOME}}/release.zip .
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         with:

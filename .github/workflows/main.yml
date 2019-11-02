@@ -5,17 +5,17 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-16.04, windows-latest, macos-latest]
+        os: [windows-latest]
         include:
-          - os: ubuntu-16.04
-            asset_dir: "src" # node/out/Release/linux/
-            asset_name: "linux-x64.zip"
+          # - os: ubuntu-16.04
+          #   asset_dir: "src" # node/out/Release/linux/
+          #   asset_name: "linux-x64.zip"
           - os: windows-latest
             asset_dir: "src" #node/out/Release/win32/
             asset_name: win32-x64.zip
-          - os: macos-latest
-            asset_dir: "src" #node/out/Release/darwin/
-            asset_name: darwin-x64.zip
+          # - os: macos-latest
+          #   asset_dir: "src" #node/out/Release/darwin/
+          #   asset_name: darwin-x64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@master
@@ -38,7 +38,7 @@ jobs:
       #   run: node build.js
       - name: Archive Release
         working-directory: ${{matrix.asset_dir}}
-        run: npx bestzip ${GITHUB_WORKSPACE}/release.zip .
+        run: npx bestzip ${{GITHUB_WORKSPACE}}/release.zip .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1

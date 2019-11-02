@@ -8,7 +8,7 @@ jobs:
         os: [ubuntu-16.04]
         include:
           - os: ubuntu-16.04
-            asset_dir: "src" # node/out/Release/linux/
+            asset_dir: "src/*" # node/out/Release/linux/
             asset_name: "linux-x64.zip"
           # - os: windows-latest
           #   asset_dir: "src" #node/out/Release/win32/

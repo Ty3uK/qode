@@ -5,17 +5,17 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-16.04, windows-latest, macos-latest]
+        os: [ubuntu-16.04]
         include:
           - os: ubuntu-16.04
             asset_dir: "src" # node/out/Release/linux/
             asset_name: "linux-x64.zip"
-          - os: windows-latest
-            asset_dir: "src" #node/out/Release/win32/
-            asset_name: win32-x64.zip
-          - os: macos-latest
-            asset_dir: "src" #node/out/Release/darwin/
-            asset_name: darwin-x64.zip
+          # - os: windows-latest
+          #   asset_dir: "src" #node/out/Release/win32/
+          #   asset_name: win32-x64.zip
+          # - os: macos-latest
+          #   asset_dir: "src" #node/out/Release/darwin/
+          #   asset_name: darwin-x64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@master
@@ -41,6 +41,7 @@ jobs:
         with:
           path: ${{matrix.asset_dir}}
           filename: "release.zip"
+          exclusions: "*.git* /*node_modules/*"
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         with:

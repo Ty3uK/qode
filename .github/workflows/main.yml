@@ -38,9 +38,8 @@ jobs:
       #   run: node build.js
       - name: Archive Release
         uses: montudor/action-zip@v0.1.0
-        working-directory: ${{matrix.asset_dir}}
         with:
-          args: zip -qq -r ${{job.container.env.HOME}}/release.zip .
+          args: (cd ${{matrix.asset_dir}} && zip -qq -r ${{job.container.env.HOME}}/release.zip .)
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release

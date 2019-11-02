@@ -36,10 +36,11 @@ jobs:
       #     SYNC_GIT_SUBMODULE: true
       #     QT_INSTALL_DIR: ${{job.container.env.Qt5Dir}}
       #   run: node build.js
+      - run: cd ${{matrix.asset_dir}}
       - name: Archive Release
         uses: montudor/action-zip@v0.1.0
         with:
-          args: (cd ${{matrix.asset_dir}} && zip -qq -r ${{job.container.env.HOME}}/release.zip .)
+          args: zip -qq -r ${{job.container.env.HOME}}/release.zip .
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release

@@ -36,9 +36,11 @@ jobs:
       #     SYNC_GIT_SUBMODULE: true
       #     QT_INSTALL_DIR: ${{job.container.env.Qt5Dir}}
       #   run: node build.js
+      - name: echo
+        run: echo "${{GITHUB_WORKSPACE}}"
       - name: Archive Release
         working-directory: ${{matrix.asset_dir}}
-        run: npx bestzip ${{job.env.GITHUB_WORKSPACE}}/release.zip .
+        run: npx bestzip "${{GITHUB_WORKSPACE}}/release.zip" .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1

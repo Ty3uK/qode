@@ -36,16 +36,19 @@ jobs:
       #     SYNC_GIT_SUBMODULE: true
       #     QT_INSTALL_DIR: ${{job.container.env.Qt5Dir}}
       #   run: node build.js
-      - run: cd ${{matrix.asset_dir}}
       - name: Archive Release
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r ${{job.container.env.HOME}}/release.zip .
+        working-directory: ${{matrix.asset_dir}}
+        run: npx bestzip ${{job.container.env.HOME}}/release.zip .
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v1-release
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: release.zip
-          asset_name: ${{ matrix.asset_name }}
-          tag: ${{ github.ref }}
+          name: test
+          path: ${{job.container.env.HOME}}/release.zip
+        # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v1-release
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: ${{job.container.env.HOME}}/release.zip
+      #     asset_name: ${{ matrix.asset_name }}
+      #     tag: ${{ github.ref }}
